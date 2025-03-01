@@ -187,7 +187,7 @@ export default function UserTable() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <UserItem key={user._id} user={user} />
+              <UserItem key={user._id} {...user} />
             ))}
           </tbody>
         </table>
