@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import userService from "../../api/userService";
 
 import UserItem from "./UserItem";
+import UserCreate from "./UserCreate";
 
 export default function UserTable() {
   const [users, setUsers] = useState([]);
+  const [showCreate, setShowCreate] = useState(false);
 
   useEffect(() => {
     userService
@@ -13,6 +15,10 @@ export default function UserTable() {
       .then((userData) => setUsers(userData))
       .catch((err) => console.log(err));
   }, []);
+
+  const addUserHandler = () => {
+    setShowCreate(true);
+  };
 
   return (
     <>
@@ -193,7 +199,10 @@ export default function UserTable() {
         </table>
       </div>
 
-      <button className="btn-add btn">Add new user</button>
+      <button className="btn-add btn" onClick={addUserHandler}>
+        Add new user
+      </button>
+      {showCreate && <UserCreate />}
     </>
   );
 }
