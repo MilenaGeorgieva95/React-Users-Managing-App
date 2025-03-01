@@ -4,8 +4,13 @@ export default function UserItem({
   lastName,
   email,
   phoneNumber,
+  updatedAt,
   _id,
 }) {
+  // const options={ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+
+  const dateOptions = { month: "long", day: "numeric", year: "numeric" };
+
   return (
     <tr>
       <td>
@@ -15,7 +20,7 @@ export default function UserItem({
       <td>{lastName}</td>
       <td>{email}</td>
       <td>{phoneNumber}</td>
-      <td>June 28, 2022</td>
+      <td>{new Date(updatedAt).toLocaleString("en-US", dateOptions)}</td>
 
       <td className="actions">
         <button className="btn edit-btn" title="Edit">
