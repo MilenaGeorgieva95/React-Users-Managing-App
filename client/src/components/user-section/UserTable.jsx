@@ -1,6 +1,14 @@
+import { useEffect } from "react";
+
+import userService from "../../api/userService";
+
 import UserItem from "./UserItem";
 
 export default function UserTable() {
+  useEffect(() => {
+    userService.getAllUsers().then((userData) => console.log(userData));
+  }, []);
+
   return (
     <>
       <div className="table-wrapper">
