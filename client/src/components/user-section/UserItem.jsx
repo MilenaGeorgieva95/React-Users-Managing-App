@@ -1,11 +1,5 @@
-export default function UserItem({
-  imageUrl,
-  firstName,
-  lastName,
-  email,
-  phoneNumber,
-  _id,
-}) {
+export default function UserItem({ user }) {
+  const { imageUrl, firstName, lastName, email, phoneNumber, _id } = user;
   return (
     <tr>
       <td>

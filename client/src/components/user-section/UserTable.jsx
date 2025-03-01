@@ -8,7 +8,10 @@ export default function UserTable() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    userService.getAllUsers().then((userData) => setUsers(userData));
+    userService
+      .getAllUsers()
+      .then((userData) => setUsers(userData))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -183,7 +186,9 @@ export default function UserTable() {
             </tr>
           </thead>
           <tbody>
-            <UserItem />
+            {users.map((user) => (
+              <UserItem key={user._id} user={user} />
+            ))}
           </tbody>
         </table>
       </div>
