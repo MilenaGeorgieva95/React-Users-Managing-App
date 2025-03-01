@@ -1,3 +1,5 @@
+import { dateFormatter } from "../../utils/dateFormatter";
+
 export default function UserItem({
   imageUrl,
   firstName,
@@ -7,10 +9,6 @@ export default function UserItem({
   updatedAt,
   _id,
 }) {
-  // const options={ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-
-  const dateOptions = { month: "long", day: "numeric", year: "numeric" };
-
   return (
     <tr>
       <td>
@@ -20,7 +18,7 @@ export default function UserItem({
       <td>{lastName}</td>
       <td>{email}</td>
       <td>{phoneNumber}</td>
-      <td>{new Date(updatedAt).toLocaleString("en-US", dateOptions)}</td>
+      <td>{dateFormatter(updatedAt)}</td>
 
       <td className="actions">
         <button className="btn edit-btn" title="Edit">
