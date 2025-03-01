@@ -20,6 +20,10 @@ export default function UserTable() {
     setShowCreate(true);
   };
 
+  const closeAddUserHandler = () => {
+    setShowCreate(false);
+  };
+
   return (
     <>
       <div className="table-wrapper">
@@ -202,7 +206,7 @@ export default function UserTable() {
       <button className="btn-add btn" onClick={addUserHandler}>
         Add new user
       </button>
-      {showCreate && <UserCreate />}
+      {showCreate && <UserCreate onClose={closeAddUserHandler} />}
     </>
   );
 }
