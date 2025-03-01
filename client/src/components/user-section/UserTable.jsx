@@ -1,12 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import userService from "../../api/userService";
 
 import UserItem from "./UserItem";
 
 export default function UserTable() {
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
-    userService.getAllUsers().then((userData) => console.log(userData));
+    userService.getAllUsers().then((userData) => setUsers(userData));
   }, []);
 
   return (
