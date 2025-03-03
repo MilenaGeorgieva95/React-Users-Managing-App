@@ -30,6 +30,7 @@ export default function UserTable() {
     const newUser = await userService.createUser(formData);
     setUsers((oldUsers) => [...oldUsers, newUser]);
     setShowCreate(false);
+    console.log(newUser);
   };
 
   return (

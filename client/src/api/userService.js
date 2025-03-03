@@ -8,12 +8,40 @@ export default {
     return usersData;
   },
   async createUser(userData) {
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      imageUrl,
+      country,
+      city,
+      street,
+      streetNumber,
+    } = userData;
+
+    const postData = {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      imageUrl,
+      address: {
+        country,
+        city,
+        street,
+        streetNumber,
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
     const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData),
+      body: JSON.stringify(postData),
     };
     const res = await fetch(baseUrl, options);
     const data = await res.json();
