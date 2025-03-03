@@ -4,10 +4,12 @@ import userService from "../../api/userService";
 
 import UserItem from "./UserItem";
 import UserCreate from "./UserCreate";
+import UserDetails from "./UserDetails";
 
 export default function UserTable() {
   const [users, setUsers] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
+  const [userIdInfo, setUserIdInfo] = useState();
 
   useEffect(() => {
     userService
@@ -30,7 +32,10 @@ export default function UserTable() {
     const newUser = await userService.createUser(formData);
     setUsers((oldUsers) => [...oldUsers, newUser]);
     setShowCreate(false);
-    console.log(newUser);
+  };
+
+  const userInfoBtnClickHandler = async (userId) => {
+    setUserIdInfo(userId);
   };
 
   return (
@@ -206,7 +211,11 @@ export default function UserTable() {
           </thead>
           <tbody>
             {users.map((user) => (
-              <UserItem key={user._id} {...user} />
+              <UserItem
+                key={user._id}
+                {...user}
+                userInfo={userInfoBtnClickHandler}
+              />
             ))}
           </tbody>
         </table>
@@ -221,6 +230,7 @@ export default function UserTable() {
           onSave={saveCreateUserHandler}
         />
       )}
+      {userIdInfo && <UserDetails userId={userIdInfo} />}
     </>
   );
 }

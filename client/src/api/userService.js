@@ -47,4 +47,10 @@ export default {
     const data = await res.json();
     return data;
   },
+  async getOneUser(userId) {
+    const res = await fetch(baseUrl + "/" + userId);
+    const data = await res.json();
+    const usersData = Object.values(data);
+    return usersData;
+  },
 };
