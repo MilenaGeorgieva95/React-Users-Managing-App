@@ -24,6 +24,14 @@ export default function UserTable() {
     setShowCreate(false);
   };
 
+  const saveCreateUserHandler = async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const newUser = await userService.createUser(formData);
+    setUsers((oldUsers) => [...oldUsers, newUser]);
+    setShowCreate(false);
+  };
+
   return (
     <>
       <div className="table-wrapper">
@@ -206,7 +214,12 @@ export default function UserTable() {
       <button className="btn-add btn" onClick={addUserHandler}>
         Add new user
       </button>
-      {showCreate && <UserCreate onClose={closeAddUserHandler} />}
+      {showCreate && (
+        <UserCreate
+          onClose={closeAddUserHandler}
+          onSave={saveCreateUserHandler}
+        />
+      )}
     </>
   );
 }
