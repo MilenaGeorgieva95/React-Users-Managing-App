@@ -51,8 +51,9 @@ export default function UserTable() {
   const closeUserDeleteHandler = () => {
     setDeleteUserId(null);
   };
-  const deleteUserHandler = async (userId) => {
-    await userService.delUser(userId);
+  const deleteUserHandler = async () => {
+    await userService.delUser(deleteUserId);
+    setUsers((users) => users.filter((user) => user._id !== deleteUserId));
     setDeleteUserId(null);
   };
 
@@ -254,7 +255,6 @@ export default function UserTable() {
       )}
       {deleteUserId && (
         <UserDelete
-          userId={deleteUserId}
           onClose={closeUserDeleteHandler}
           onDelete={deleteUserHandler}
         />

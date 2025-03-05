@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import userService from "../../api/userService";
 
-export default function UserDelete({ onClose, onDelete, userId }) {
+export default function UserDelete({ onClose, onDelete }) {
   return (
     <div className="overlay">
       <div className="backdrop" onClick={onClose}></div>
@@ -33,7 +33,7 @@ export default function UserDelete({ onClose, onDelete, userId }) {
                 id="action-save"
                 className="btn"
                 type="submit"
-                onClick={() => onDelete(userId)}
+                onClick={onDelete}
               >
                 Delete
               </button>

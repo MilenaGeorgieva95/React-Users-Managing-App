@@ -57,9 +57,9 @@ export default {
   },
   async delUser(userId) {
     const options = {
-      method: "POST",
+      method: "DELETE",
     };
-    const res = await fetch(baseUrl, options);
+    const res = await fetch(baseUrl + "/" + userId, options);
     const data = await res.json();
     return data;
   },
