@@ -5,6 +5,7 @@ export default {
     const res = await fetch(baseUrl);
     const data = await res.json();
     const usersData = Object.values(data);
+
     return usersData;
   },
   async createUser(userData) {
@@ -45,12 +46,15 @@ export default {
     };
     const res = await fetch(baseUrl, options);
     const data = await res.json();
+    console.log(data);
+
     return data;
   },
   async getOneUser(userId) {
     const res = await fetch(baseUrl + "/" + userId);
     const data = await res.json();
-    const usersData = Object.values(data);
-    return usersData;
+    const userData = data;
+    console.log(userData);
+    return userData;
   },
 };

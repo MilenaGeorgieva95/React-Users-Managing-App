@@ -1,26 +1,25 @@
 import { useEffect, useState } from "react";
 import userService from "../../api/userService";
+import { dateFormatter } from "../../utils/dateFormatter";
 
-export default function UserDetails({ userId }) {
-  const [userInfo, setUserInfo] = useState([]);
+export default function UserDetails({ userId, onClose }) {
+  const [userInfo, setUserInfo] = useState({ address: "abc" });
 
   useEffect(() => {
-    console.log(userId);
-
     userService
       .getOneUser(userId)
       .then((userData) => setUserInfo(userData))
       .catch((err) => console.log(err));
-  }, []);
+  }, [userId]);
 
   return (
     <div className="overlay">
-      <div className="backdrop"></div>
+      <div className="backdrop" onClick={onClose}></div>
       <div className="modal">
-        <div className="user-container">
+        <div className="detail-container">
           <header className="headers">
-            <h2>Edit User/Add User</h2>
-            <button className="btn close">
+            <h2>User Detail</h2>
+            <button onClick={onClose} className="btn close">
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -38,114 +37,45 @@ export default function UserDetails({ userId }) {
               </svg>
             </button>
           </header>
-          <form>
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="firstName">First name {userInfo[1]}</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-user"></i>
-                  </span>
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    defaultValue={userInfo[1]}
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="lastName">Last name</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-user"></i>
-                  </span>
-                  <input id="lastName" name="lastName" type="text" />
-                </div>
-              </div>
+          <div className="content">
+            <div className="image-container">
+              <img src={userInfo.imageUrl} alt="" className="image" />
             </div>
+            <div className="user-details">
+              <p>
+                User Id: <strong>{userInfo._id}</strong>
+              </p>
+              <p>
+                Full Name:
+                <strong>
+                  {" "}
+                  {userInfo.firstName} {userInfo.lastName}
+                </strong>
+              </p>
+              <p>
+                Email: <strong>{userInfo.email}</strong>
+              </p>
+              <p>
+                Phone Number: <strong>{userInfo.phoneNumber}</strong>
+              </p>
+              <p>
+                Address:
+                <strong>
+                  {" "}
+                  {userInfo.address.country}, {userInfo.address.city},{" "}
+                  {userInfo.address.street}, {userInfo.address.streetNumber}{" "}
+                </strong>
+              </p>
 
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-envelope"></i>
-                  </span>
-                  <input id="email" name="email" type="text" />
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="phoneNumber">Phone number</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-phone"></i>
-                  </span>
-                  <input id="phoneNumber" name="phoneNumber" type="text" />
-                </div>
-              </div>
+              <p>
+                Created on: <strong>{dateFormatter(userInfo.createdAt)}</strong>
+              </p>
+              <p>
+                Modified on:{" "}
+                <strong>{dateFormatter(userInfo.updatedAt)}</strong>
+              </p>
             </div>
-
-            <div className="form-group long-line">
-              <label htmlFor="imageUrl">Image Url</label>
-              <div className="input-wrapper">
-                <span>
-                  <i className="fa-solid fa-image"></i>
-                </span>
-                <input id="imageUrl" name="imageUrl" type="text" />
-              </div>
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="country">Country</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-map"></i>
-                  </span>
-                  <input id="country" name="country" type="text" />
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="city">City</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-city"></i>
-                  </span>
-                  <input id="city" name="city" type="text" />
-                </div>
-              </div>
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="street">Street</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-map"></i>
-                  </span>
-                  <input id="street" name="street" type="text" />
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="streetNumber">Street number</label>
-                <div className="input-wrapper">
-                  <span>
-                    <i className="fa-solid fa-house-chimney"></i>
-                  </span>
-                  <input id="streetNumber" name="streetNumber" type="text" />
-                </div>
-              </div>
-            </div>
-            <div id="form-actions">
-              <button id="action-save" className="btn" type="submit">
-                Save
-              </button>
-              <button id="action-cancel" className="btn" type="button">
-                Cancel
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>

@@ -73,7 +73,12 @@ export default function UserCreate({ onClose, onSave }) {
                 <span>
                   <i className="fa-solid fa-image"></i>
                 </span>
-                <input id="imageUrl" name="imageUrl" type="text" />
+                <input
+                  style={{ color: "black" }}
+                  id="imageUrl"
+                  name="imageUrl"
+                  type="text"
+                />
               </div>
             </div>
 

@@ -11,6 +11,8 @@ export default function UserTable() {
   const [showCreate, setShowCreate] = useState(false);
   const [userIdInfo, setUserIdInfo] = useState();
 
+  const [showDetails, setShowDetails] = useState(false);
+
   useEffect(() => {
     userService
       .getAllUsers()
@@ -35,7 +37,12 @@ export default function UserTable() {
   };
 
   const userInfoBtnClickHandler = async (userId) => {
+    setShowDetails(true);
     setUserIdInfo(userId);
+  };
+
+  const closeUserDetailsHandler = () => {
+    setShowDetails(false);
   };
 
   return (
@@ -230,7 +237,9 @@ export default function UserTable() {
           onSave={saveCreateUserHandler}
         />
       )}
-      {userIdInfo && <UserDetails userId={userIdInfo} />}
+      {showDetails && userIdInfo && (
+        <UserDetails onClose={closeUserDetailsHandler} userId={userIdInfo} />
+      )}
     </>
   );
 }
