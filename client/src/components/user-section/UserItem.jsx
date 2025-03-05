@@ -9,6 +9,7 @@ export default function UserItem({
   updatedAt,
   _id,
   userInfo,
+  userDelete,
 }) {
   return (
     <tr>
@@ -39,7 +40,11 @@ export default function UserItem({
             ></path>
           </svg>
         </button>
-        <button className="btn delete-btn" title="Delete">
+        <button
+          className="btn delete-btn"
+          title="Delete"
+          onClick={() => userDelete(_id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"

@@ -46,8 +46,6 @@ export default {
     };
     const res = await fetch(baseUrl, options);
     const data = await res.json();
-    console.log(data);
-
     return data;
   },
   async getOneUser(userId) {
@@ -56,5 +54,13 @@ export default {
     const userData = data;
     console.log(userData);
     return userData;
+  },
+  async delUser(userId) {
+    const options = {
+      method: "POST",
+    };
+    const res = await fetch(baseUrl, options);
+    const data = await res.json();
+    return data;
   },
 };

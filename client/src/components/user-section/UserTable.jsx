@@ -5,13 +5,14 @@ import userService from "../../api/userService";
 import UserItem from "./UserItem";
 import UserCreate from "./UserCreate";
 import UserDetails from "./UserDetails";
+import UserDelete from "./UserDelete";
 
 export default function UserTable() {
   const [users, setUsers] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [userIdInfo, setUserIdInfo] = useState();
 
-  const [showDetails, setShowDetails] = useState(false);
+  const [deleteUserId, setDeleteUserId] = useState();
 
   useEffect(() => {
     userService
@@ -37,12 +38,22 @@ export default function UserTable() {
   };
 
   const userInfoBtnClickHandler = async (userId) => {
-    setShowDetails(true);
     setUserIdInfo(userId);
   };
 
   const closeUserDetailsHandler = () => {
-    setShowDetails(false);
+    setUserIdInfo(null);
+  };
+
+  const userDeleteBtnClickHandler = (userId) => {
+    setDeleteUserId(userId);
+  };
+  const closeUserDeleteHandler = () => {
+    setDeleteUserId(null);
+  };
+  const deleteUserHandler = async (userId) => {
+    await userService.delUser(userId);
+    setDeleteUserId(null);
   };
 
   return (
@@ -222,6 +233,7 @@ export default function UserTable() {
                 key={user._id}
                 {...user}
                 userInfo={userInfoBtnClickHandler}
+                userDelete={userDeleteBtnClickHandler}
               />
             ))}
           </tbody>
@@ -237,8 +249,15 @@ export default function UserTable() {
           onSave={saveCreateUserHandler}
         />
       )}
-      {showDetails && userIdInfo && (
-        <UserDetails onClose={closeUserDetailsHandler} userId={userIdInfo} />
+      {userIdInfo && (
+        <UserDetails userId={userIdInfo} onClose={closeUserDetailsHandler} />
+      )}
+      {deleteUserId && (
+        <UserDelete
+          userId={deleteUserId}
+          onClose={closeUserDeleteHandler}
+          onDelete={deleteUserHandler}
+        />
       )}
     </>
   );

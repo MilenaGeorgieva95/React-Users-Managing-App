@@ -3,7 +3,7 @@ import userService from "../../api/userService";
 import { dateFormatter } from "../../utils/dateFormatter";
 
 export default function UserDetails({ userId, onClose }) {
-  const [userInfo, setUserInfo] = useState({ address: "abc" });
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     userService
@@ -62,8 +62,8 @@ export default function UserDetails({ userId, onClose }) {
                 Address:
                 <strong>
                   {" "}
-                  {userInfo.address.country}, {userInfo.address.city},{" "}
-                  {userInfo.address.street}, {userInfo.address.streetNumber}{" "}
+                  {userInfo.address?.country}, {userInfo.address?.city},{" "}
+                  {userInfo.address?.street}, {userInfo.address?.streetNumber}{" "}
                 </strong>
               </p>
 
