@@ -10,6 +10,7 @@ export default function UserItem({
   _id,
   userInfo,
   userDelete,
+  userEdit,
 }) {
   return (
     <tr>
@@ -23,7 +24,11 @@ export default function UserItem({
       <td>{dateFormatter(updatedAt)}</td>
 
       <td className="actions">
-        <button className="btn edit-btn" title="Edit">
+        <button
+          className="btn edit-btn"
+          title="Edit"
+          onClick={() => userEdit(_id)}
+        >
           <svg
             aria-hidden="true"
             focusable="false"

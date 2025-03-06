@@ -52,12 +52,52 @@ export default {
     const res = await fetch(baseUrl + "/" + userId);
     const data = await res.json();
     const userData = data;
-    console.log(userData);
     return userData;
   },
   async delUser(userId) {
     const options = {
       method: "DELETE",
+    };
+    const res = await fetch(baseUrl + "/" + userId, options);
+    const data = await res.json();
+    return data;
+  },
+  async editUser(userId, userData) {
+    const {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      imageUrl,
+      country,
+      city,
+      street,
+      streetNumber,
+    } = userData;
+
+    const postData = {
+      _id: userId,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      imageUrl,
+      address: {
+        country,
+        city,
+        street,
+        streetNumber,
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    const options = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
     };
     const res = await fetch(baseUrl + "/" + userId, options);
     const data = await res.json();

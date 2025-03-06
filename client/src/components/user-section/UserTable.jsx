@@ -6,6 +6,7 @@ import UserItem from "./UserItem";
 import UserCreate from "./UserCreate";
 import UserDetails from "./UserDetails";
 import UserDelete from "./UserDelete";
+import UserEdit from "./UserEdit";
 
 export default function UserTable() {
   const [users, setUsers] = useState([]);
@@ -13,6 +14,7 @@ export default function UserTable() {
   const [userIdInfo, setUserIdInfo] = useState();
 
   const [deleteUserId, setDeleteUserId] = useState();
+  const [editUserId, setEditUserId] = useState();
 
   useEffect(() => {
     userService
@@ -55,6 +57,24 @@ export default function UserTable() {
     await userService.delUser(deleteUserId);
     setUsers((users) => users.filter((user) => user._id !== deleteUserId));
     setDeleteUserId(null);
+  };
+
+  const userEditClickHandler = (userId) => {
+    setEditUserId(userId);
+  };
+
+  const saveEditUserHandler = async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const newUser = await userService.editUser(editUserId, formData);
+    setUsers((oldUsers) =>
+      oldUsers.map((user) => (user._id === editUserId ? newUser : user))
+    );
+    setEditUserId(null);
+  };
+
+  const closeUserEditHandler = () => {
+    setEditUserId(null);
   };
 
   return (
@@ -235,6 +255,7 @@ export default function UserTable() {
                 {...user}
                 userInfo={userInfoBtnClickHandler}
                 userDelete={userDeleteBtnClickHandler}
+                userEdit={userEditClickHandler}
               />
             ))}
           </tbody>
@@ -257,6 +278,13 @@ export default function UserTable() {
         <UserDelete
           onClose={closeUserDeleteHandler}
           onDelete={deleteUserHandler}
+        />
+      )}
+      {editUserId && (
+        <UserEdit
+          userId={editUserId}
+          onSave={saveEditUserHandler}
+          onClose={closeUserEditHandler}
         />
       )}
     </>
